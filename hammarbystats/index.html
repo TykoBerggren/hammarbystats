@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hammarby IF - Statistik 2025</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <svg width="60" height="60" viewBox="0 0 100 100" class="hammarby-logo">
+                        <!-- Lagerkrans -->
+                        <path d="M20 30 Q15 20 25 15 Q35 10 45 15 Q55 10 65 15 Q75 10 85 15 Q95 20 90 30" 
+                              fill="#FFD700" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M20 70 Q15 80 25 85 Q35 90 45 85 Q55 90 65 85 Q75 90 85 85 Q95 80 90 70" 
+                              fill="#FFD700" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M15 25 Q10 35 15 45 Q10 55 15 65 Q10 75 20 70" 
+                              fill="#FFD700" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M85 25 Q90 35 85 45 Q90 55 85 65 Q90 75 80 70" 
+                              fill="#FFD700" stroke="#B8860B" stroke-width="1"/>
+                        
+                        <!-- Sköld -->
+                        <path d="M30 25 L70 25 Q75 30 75 40 L75 60 Q75 75 50 85 Q25 75 25 60 L25 40 Q25 30 30 25 Z" 
+                              fill="white" stroke="#00A859" stroke-width="2"/>
+                        
+                        <!-- Gröna ränder -->
+                        <rect x="30" y="35" width="40" height="6" fill="#00A859"/>
+                        <rect x="30" y="48" width="40" height="6" fill="#00A859"/>
+                        <rect x="30" y="61" width="40" height="6" fill="#00A859"/>
+                        
+                        <!-- HIF text -->
+                        <text x="40" y="45" font-family="Arial Black" font-size="8" fill="white" font-weight="bold">H</text>
+                        <text x="50" y="45" font-family="Arial Black" font-size="8" fill="white" font-weight="bold">I</text>
+                        <text x="57" y="45" font-family="Arial Black" font-size="8" fill="white" font-weight="bold">F</text>
+                    </svg>
+                    <p class="tagline">Hammarby Logan - Statistik 2025</p>
+                </div>
+                <div class="live-indicator">
+                    <span class="live-badge" id="liveBadge">🔴 LIVE DATA</span>
+                    <p class="last-updated" id="lastUpdated">Uppdaterad: Laddar...</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <ul class="nav-list">
+                <li><a href="#overview" class="nav-link active">Översikt</a></li>
+                <li><a href="#matches" class="nav-link">Matcher</a></li>
+                <li><a href="#players" class="nav-link">Spelare</a></li>
+                <li><a href="#statistics" class="nav-link">Statistik</a></li>
+            </ul>
+            <button class="refresh-btn" id="refreshBtn">🔄 Uppdatera</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Overview Section -->
+            <section id="overview" class="section active">
+                <h2 class="section-title">Säsong 2025 - Översikt</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🏆</div>
+                        <div class="stat-content">
+                            <h3>Tabellposition</h3>
+                            <p class="stat-number" id="leaguePosition">2</p>
+                            <p class="stat-label">av 16 lag</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">⚽</div>
+                        <div class="stat-content">
+                            <h3>Mål Gjorda</h3>
+                            <p class="stat-number" id="goalsFor">23</p>
+                            <p class="stat-label">på 13 matcher</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">🛡️</div>
+                        <div class="stat-content">
+                            <h3>Mål Insläppta</h3>
+                            <p class="stat-number" id="goalsAgainst">9</p>
+                            <p class="stat-label">målskillnad +14</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-content">
+                            <h3>Poäng</h3>
+                            <p class="stat-number" id="points">27</p>
+                            <p class="stat-label">8V 3O 2F</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-cards">
+                    <div class="info-card">
+                        <h3>🏟️ Nästa Match</h3>
+                        <div class="next-match" id="nextMatch">
+                            <p><strong>Halmstad</strong></p>
+                            <p>28 juni 2025, 13:00</p>
+                            <p>Tele2 Arena (Hemma)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>📈 Form (senaste 5)</h3>
+                        <div class="form-display" id="formDisplay">
+                            <span class="form-result draw">O</span>
+                            <span class="form-result win">V</span>
+                            <span class="form-result loss">F</span>
+                            <span class="form-result win">V</span>
+                            <span class="form-result win">V</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>🌟 Assist-kung</h3>
+                        <div class="player-highlight" id="playerHighlight">
+                            <p><strong>Logan</strong></p>
+                            <p>3 assist, 1 mål</p>
+                            <p>⚡ Kreativ mittfältare</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Matches Section -->
+            <section id="matches" class="section">
+                <h2 class="section-title">Senaste Matcher</h2>
+                <div class="matches-container" id="matchesContainer">
+                    <!-- Matches will be loaded here -->
+                </div>
+                
+                <h3>Kommande Matcher</h3>
+                <div class="upcoming-matches" id="upcomingMatches">
+                    <!-- Upcoming matches will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Players Section -->
+            <section id="players" class="section">
+                <h2 class="section-title">Toppspelare 2025</h2>
+                <div class="players-grid" id="playersGrid">
+                    <!-- Players will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section id="statistics" class="section">
+                <h2 class="section-title">Detaljerad Statistik</h2>
+                
+                <div class="stats-detailed">
+                    <div class="stat-group">
+                        <h3>Allsvenskan Tabell (Topp 5)</h3>
+                        <div class="league-table" id="leagueTable">
+                            <!-- League table will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div class="stat-group">
+                        <h3>Säsongsstatistik</h3>
+                        <div class="season-stats" id="seasonStats">
+                            <!-- Season stats will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Hammarby IF Statistik | Data från Allsvenskan API</p>
+            <p>Hammarby Logan Bajen Forever! Hammarby Logan</p>
+        </div>
+    </footer>
+
+    <script>
+        // Real API data fetching and display
+        class HammarbyStat {
+            constructor() {
+                this.apiUrl = '/api/hammarby/stats';
+                this.liveUrl = '/api/hammarby/live';
+                this.data = null;
+                this.init();
+            }
+
+            async init() {
+                await this.loadData();
+                this.setupEventListeners();
+                this.startAutoRefresh();
+            }
+
+            async loadData() {
+                try {
+                    const response = await fetch(this.apiUrl);
+                    if (!response.ok) throw new Error('API request failed');
+                    
+                    this.data = await response.json();
+                    this.updateDisplay();
+                    this.updateTimestamp();
+                    
+                    console.log('✅ Real Hammarby data loaded:', this.data);
+                } catch (error) {
+                    console.error('❌ Error loading data:', error);
+                    this.showError();
+                }
+            }
+
+            updateDisplay() {
+                if (!this.data) return;
+
+                const season = this.data.season_2025;
+                
+                // Update overview stats
+                document.getElementById('leaguePosition').textContent = season.league_position;
+                document.getElementById('goalsFor').textContent = season.goals_for;
+                document.getElementById('goalsAgainst').textContent = season.goals_against;
+                document.getElementById('points').textContent = season.points;
+
+                // Update form display
+                this.updateForm(season.form);
+                
+                // Update matches
+                this.updateMatches();
+                
+                // Update players
+                this.updatePlayers();
+                
+                // Update league table
+                this.updateLeagueTable();
+                
+                // Update season stats
+                this.updateSeasonStats();
+            }
+
+            updateForm(form) {
+                const formDisplay = document.getElementById('formDisplay');
+                formDisplay.innerHTML = '';
+                
+                for (let result of form) {
+                    const span = document.createElement('span');
+                    span.className = `form-result ${result === 'V' ? 'win' : result === 'O' ? 'draw' : 'loss'}`;
+                    span.textContent = result;
+                    formDisplay.appendChild(span);
+                }
+            }
+
+            updateMatches() {
+                const container = document.getElementById('matchesContainer');
+                container.innerHTML = '';
+                
+                this.data.recent_matches.forEach(match => {
+                    const matchDiv = document.createElement('div');
+                    matchDiv.className = 'match-card';
+                    matchDiv.innerHTML = `
+                        <div class="match-date">${match.date}</div>
+                        <div class="match-teams">
+                            <span class="team-name">Hammarby IF</span>
+                            <span class="match-result">${match.result}</span>
+                            <span class="team-name">${match.opponent}</span>
+                        </div>
+                        <div class="match-venue">${match.home_away}</div>
+                        <div class="match-outcome ${match.outcome.toLowerCase()}">${match.outcome}</div>
+                    `;
+                    container.appendChild(matchDiv);
+                });
+
+                // Update upcoming matches
+                const upcomingContainer = document.getElementById('upcomingMatches');
+                upcomingContainer.innerHTML = '';
+                
+                this.data.upcoming_matches.forEach(match => {
+                    const matchDiv = document.createElement('div');
+                    matchDiv.className = 'upcoming-match';
+                    matchDiv.innerHTML = `
+                        <div class="match-date">${match.date} ${match.time}</div>
+                        <div class="match-teams">
+                            <span class="team-name">Hammarby IF</span>
+                            <span class="vs">vs</span>
+                            <span class="team-name">${match.opponent}</span>
+                        </div>
+                        <div class="match-venue">${match.home_away}</div>
+                    `;
+                    upcomingContainer.appendChild(matchDiv);
+                });
+            }
+
+            updatePlayers() {
+                const container = document.getElementById('playersGrid');
+                container.innerHTML = '';
+                
+                this.data.top_players.forEach(player => {
+                    const playerDiv = document.createElement('div');
+                    playerDiv.className = 'player-card';
+                    playerDiv.innerHTML = `
+                        <h4>${player.name}</h4>
+                        <p class="player-position">${player.position}</p>
+                        <div class="player-stats">
+                            <span>⚽ ${player.goals} mål</span>
+                            <span>🎯 ${player.assists} assist</span>
+                            <span>🏃 ${player.matches} matcher</span>
+                        </div>
+                    `;
+                    container.appendChild(playerDiv);
+                });
+            }
+
+            updateLeagueTable() {
+                const container = document.getElementById('leagueTable');
+                container.innerHTML = '';
+                
+                this.data.league_table_top5.forEach(team => {
+                    const teamDiv = document.createElement('div');
+                    teamDiv.className = `table-row ${team.team === 'Hammarby IF' ? 'highlight' : ''}`;
+                    teamDiv.innerHTML = `
+                        <span class="position">${team.position}</span>
+                        <span class="team-name">${team.team}</span>
+                        <span class="points">${team.points}p</span>
+                        <span class="matches">${team.matches}m</span>
+                    `;
+                    container.appendChild(teamDiv);
+                });
+            }
+
+            updateSeasonStats() {
+                const container = document.getElementById('seasonStats');
+                const season = this.data.season_2025;
+                
+                container.innerHTML = `
+                    <div class="stat-row">
+                        <span>Spelade matcher:</span>
+                        <span>${season.matches_played}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Vinster:</span>
+                        <span>${season.wins}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Oavgjorda:</span>
+                        <span>${season.draws}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Förluster:</span>
+                        <span>${season.losses}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Målskillnad:</span>
+                        <span>+${season.goal_difference}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Poäng per match:</span>
+                        <span>${(season.points / season.matches_played).toFixed(2)}</span>
+                    </div>
+                `;
+            }
+
+            updateTimestamp() {
+                if (this.data && this.data.season_2025.last_updated) {
+                    document.getElementById('lastUpdated').textContent = 
+                        `Uppdaterad: ${this.data.season_2025.last_updated}`;
+                }
+            }
+
+            showError() {
+                document.getElementById('lastUpdated').textContent = 
+                    'Fel: Kunde inte ladda data';
+                document.getElementById('liveBadge').textContent = '❌ OFFLINE';
+                document.getElementById('liveBadge').className = 'live-badge offline';
+            }
+
+            setupEventListeners() {
+                // Navigation
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const targetId = link.getAttribute('href').substring(1);
+                        this.showSection(targetId);
+                        
+                        // Update active nav link
+                        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    });
+                });
+
+                // Refresh button
+                document.getElementById('refreshBtn').addEventListener('click', () => {
+                    this.loadData();
+                });
+            }
+
+            showSection(sectionId) {
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(sectionId).classList.add('active');
+            }
+
+            startAutoRefresh() {
+                // Refresh data every 5 minutes
+                setInterval(() => {
+                    this.loadData();
+                }, 5 * 60 * 1000);
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            new HammarbyStat();
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hammarby IF - Statistik 2025</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+    <style>
+        /* Hammarby IF Statistics - Modern CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background-image: url("images-removebg-preview.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.08;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            text-align: center;
+        }
+
+        .hammarby-logo {
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+            transition: transform 0.3s ease;
+            margin-bottom: 0.5rem;
+        }
+
+        .hammarby-logo:hover {
+            transform: scale(1.1);
+        }
+
+        .tagline {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .live-indicator {
+            text-align: right;
+        }
+
+        .live-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #4CAF50, #66BB6A);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+            margin-bottom: 0.25rem;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .last-updated {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Navigation */
+        .nav {
+            background: rgba(26, 95, 26, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 20px;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .refresh-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 2rem 0;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #1a5f1a;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #1a5f1a, #2d8f2d);
+            border-radius: 50%;
+            color: white;
+        }
+
+        .stat-content h3 {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a5f1a;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Info Cards */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card h3 {
+            color: #1a5f1a;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .next-match p {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-display {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .form-result {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+        }
+
+        .form-result.win {
+            background: #4CAF50;
+        }
+
+        .form-result.draw {
+            background: #FF9800;
+        }
+
+        .form-result.loss {
+            background: #F44336;
+        }
+
+        /* Matches */
+        .matches-container {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .match-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
+            gap: 1rem;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .match-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            background: rgba(26, 95, 26, 0.05);
+        }
+
+        .match-date {
+            font-weight: 600;
+            color: #666;
+            min-width: 100px;
+        }
+
+        .match-teams {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .team-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .match-result {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a5f1a;
+            background: rgba(26, 95, 26, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 8px;
+        }
+
+        .match-outcome {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .match-outcome.vinst {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .match-outcome.oavgjort {
+            background: #FF9800;
+            color: white;
+        }
+
+        .match-outcome.förlust {
+            background: #F44336;
+            color: white;
+        }
+        
+        .upcoming-matches {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .upcoming-match {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #1a5f1a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upcoming-match:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            background: rgba(26, 95, 26, 0.05);
+        }
+
+        .upcoming-match .match-teams {
+            margin: 0.5rem 0;
+        }
+
+        .vs {
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Players */
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .player-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .player-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .player-card h4 {
+            font-size: 1.3rem;
+            color: #1a5f1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .player-position {
+            color: #666;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .player-stats {
+            display: flex;
+            justify-content: space-around;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .player-stats span {
+            background: rgba(26, 95, 26, 0.1);
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #1a5f1a;
+        }
+
+        /* Statistics */
+        .stats-detailed {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-group {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-group h3 {
+            color: #1a5f1a;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .league-table {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 40px 1fr auto auto;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .table-row:hover {
+            background: rgba(26, 95, 26, 0.05);
+        }
+
+        .table-row.highlight {
+            background: rgba(26, 95, 26, 0.1);
+            border: 2px solid #1a5f1a;
+            font-weight: 600;
+        }
+
+        .position {
+            font-weight: 700;
+            color: #1a5f1a;
+            text-align: center;
+        }
+
+        .season-stats {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: rgba(26, 95, 26, 0.05);
+            border-radius: 8px;
+        }
+
+        .stat-row span:first-child {
+            color: #666;
+        }
+
+        .stat-row span:last-child {
+            font-weight: 600;
+            color: #1a5f1a;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(26, 95, 26, 0.9);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .nav .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-list {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .match-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .match-teams {
+                justify-content: center;
+            }
+
+            .stats-detailed {
+                grid-template-columns: 1fr;
+            }
+
+            .table-row {
+                grid-template-columns: 30px 1fr auto;
+                gap: 0.5rem;
+            }
+
+            .players-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .stat-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .stat-icon {
+                margin-bottom: 0.5rem;
+            }
+
+            .player-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+            <div class="logo">
+                    <svg width="60" height="60" viewBox="0 0 100 100" class="hammarby-logo">
+                        <img src="images-removebg-preview.png" alt="Hammarby logo" style="width:80px;height: 80px;">
+                        <!-- Lagerkrans -->
+                        <path d="M20 30 Q15 20 25 15 Q35 10 45 15 Q55 10 65 15 Q75 10 85 15 Q95 20 90 30" 
+                              fill="#FFD700" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M20 70 Q15 80 25 85 Q35 90 45 85 Q55 90 65 85 Q75 90 85 85 Q95 80 90 70" 
+                              fill="#FFD700" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M15 25 Q10 35 15 45 Q10 55 15 65 Q10 75 20 70" 
+                              fill="#FFD700" stroke="#B8860B" stroke-width="1"/>
+                        <path d="M85 25 Q90 35 85 45 Q90 55 85 65 Q90 75 80 70" 
+                              fill="#FFD700" stroke="#B8860B" stroke-width="1"/>
+                        
+                        <!-- Sköld -->
+                        <path d="M30 25 L70 25 Q75 30 75 40 L75 60 Q75 75 50 85 Q25 75 25 60 L25 40 Q25 30 30 25 Z" 
+                              fill="white" stroke="#00A859" stroke-width="2"/>
+                        
+                        <!-- Gröna ränder -->
+                        <rect x="30" y="35" width="40" height="6" fill="#00A859"/>
+                        <rect x="30" y="48" width="40" height="6" fill="#00A859"/>
+                        <rect x="30" y="61" width="40" height="6" fill="#00A859"/>
+                        
+                      
+                    </svg>
+                    <p class="tagline" style="margin-left: 65px;">Statistik 2025</p>
+                </div>
+                <div class="live-indicator">
+                    <span class="live-badge" id="liveBadge">🟢 RIKTIGA DATA</span>
+                    <p class="last-updated" id="lastUpdated">Uppdaterad: 2025-06-16 14:30</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <ul class="nav-list">
+                <li><a class="nav-link active" data-section="overview">Översikt</a></li>
+                <li><a class="nav-link" data-section="matches">Matcher</a></li>
+                <li><a class="nav-link" data-section="players">Spelare</a></li>
+                <li><a class="nav-link" data-section="statistics">Statistik</a></li>
+                <li><a href="hammarby_startelva_real.html" class="nav-link" style="background: rgba(255, 152, 0, 0.2);">🏆Startelvan</a></li>
+            </ul>
+            <button class="refresh-btn" id="refreshBtn">🔄 Uppdatera</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Overview Section -->
+            <section id="overview" class="section active">
+                <h2 class="section-title">Säsong 2025 - Översikt</h2>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🏆</div>
+                        <div class="stat-content">
+                            <h3>Tabellposition</h3>
+                            <p class="stat-number">2</p>
+                            <p class="stat-label">av 16 lag</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">⚽</div>
+                        <div class="stat-content">
+                            <h3>Mål Gjorda</h3>
+                            <p class="stat-number">23</p>
+                            <p class="stat-label">på 13 matcher</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🛡️</div>
+                        <div class="stat-content">
+                            <h3>Mål Insläppta</h3>
+                            <p class="stat-number">9</p>
+                            <p class="stat-label">målskillnad +14</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-content">
+                            <h3>Poäng</h3>
+                            <p class="stat-number">27</p>
+                            <p class="stat-label">8V 3O 2F</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-cards">
+                    <div class="info-card">
+                        <h3>🏟️ Nästa Match</h3>
+                        <div class="next-match">
+                            <p><strong>Halmstad</strong></p>
+                            <p>28 juni 2025, 14:00</p>
+                            <p>Tele2 Arena (Hemma)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>📈 Form</h3>
+                        <div class="form-display">
+                            <span class="form-result win">V</span>
+                            <span class="form-result draw">O</span>
+                            <span class="form-result loss">F</span>
+                            <span class="form-result win">V</span>
+                            <span class="form-result win">V</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Matches Section -->
+            <section id="matches" class="section">
+                <h2 class="section-title">Senaste/Spelade Matcher</h2>
+                <div class="matches-container">
+                    <div class="match-card">
+                        <div class="match-date">2025-05-31</div>
+                        <div class="match-teams">
+                                <span class="team-name">Hammarby IF</span>
+                            <span class="match-result">0-2</span>
+                            <span class="team-name">Elfsborg</span>
+                            </div>
+                        <div class="match-venue">Borta</div>
+                        <div class="match-outcome vinst">Vinst</div>
+                            </div>
+                    
+                    <div class="match-card">
+                        <div class="match-date">2025-05-26</div>
+                        <div class="match-teams">
+                            <span class="team-name">Hammarby IF</span>
+                            <span class="match-result">1-0</span>
+                            <span class="team-name">Degerfors</span>
+                        </div>
+                        <div class="match-venue">Hemma</div>
+                        <div class="match-outcome vinst">Vinst</div>
+                    </div>
+
+                    <div class="match-card">
+                        <div class="match-date">2025-05-22</div>
+                        <div class="match-teams">
+                                <span class="team-name">Hammarby IF</span>
+                            <span class="match-result">1-2</span>
+                            <span class="team-name">Mjällby AIF</span>
+                        </div>
+                        <div class="match-venue">Hemma</div>
+                        <div class="match-outcome förlust">Förlust</div>
+                            </div>
+                    
+                    <div class="match-card">
+                        <div class="match-date">2025-05-18</div>
+                        <div class="match-teams">
+                            <span class="team-name">Hammarby IF</span>
+                            <span class="match-result">0-0</span>
+                                <span class="team-name">AIK</span>
+                        </div>
+                        <div class="match-venue">Borta</div>
+                        <div class="match-outcome oavgjort">Oavgjort</div>
+                    </div>
+
+                    <div class="match-card">
+                        <div class="match-date">2025-05-14</div>
+                        <div class="match-teams">
+                            <span class="team-name">Hammarby IF</span>
+                            <span class="match-result">3-2</span>
+                            <span class="team-name">Sirius</span>
+                        </div>
+                        <div class="match-venue">Hemma</div>
+                        <div class="match-outcome vinst">Vinst</div>
+                    </div>
+                </div>
+                
+                <h3>Kommande Matcher</h3>
+                <div class="upcoming-matches">
+                    <div class="upcoming-match">
+                        <div class="match-date">2025-06-28 13:00</div>
+                        <div class="match-teams">
+                            <span class="team-name">Hammarby IF</span>
+                            <span class="vs">vs</span>
+                            <span class="team-name">Halmstad</span>
+                        </div>
+                        <div class="match-venue">Hemma</div>
+                            </div>
+                    
+                    <div class="upcoming-match">
+                        <div class="match-date">2025-07-05 15:30</div>
+                        <div class="match-teams">
+                                <span class="team-name">Hammarby IF</span>
+                            <span class="vs">vs</span>
+                            <span class="team-name">IFK Värnamo</span>
+                        </div>
+                        <div class="match-venue">Hemma</div>
+                            </div>
+                    
+                    <div class="upcoming-match">
+                        <div class="match-date">2025-07-13 12:00</div>
+                        <div class="match-teams">
+                            <span class="team-name">Hammarby IF</span>
+                            <span class="vs">vs</span>
+                            <span class="team-name">GAIS</span>
+                        </div>
+                        <div class="match-venue">Borta</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Players Section -->
+            <section id="players" class="section">
+                <h2 class="section-title">Toppspelare 2025</h2>
+                <div class="players-grid">
+                    <div class="player-card">
+                        <h4>Jusef Erabi</h4>
+                        <p class="player-position">Anfallare</p>
+                        <div class="player-stats">
+                            <span>⚽ 8 mål</span>
+                            <span>🎯 3 assist</span>
+                            <span>🏃 13 matcher</span>
+                            <span>💰 €6.00m</span>
+                        </div>
+                    </div>
+                    
+                    <div class="player-card">
+                        <h4>Nahir Besara</h4>
+                        <p class="player-position">Anfallande mittfältare</p>
+                        <div class="player-stats">
+                            <span>⚽ 6 mål</span>
+                            <span>🎯 5 assist</span>
+                            <span>🏃 12 matcher</span>
+                            <span>💰 €600k</span>
+                        </div>
+                    </div>
+
+                    <div class="player-card">
+                        <h4>Markus Karlsson</h4>
+                        <p class="player-position">Centralt mittfält</p>
+                        <div class="player-stats">
+                            <span>⚽ 4 mål</span>
+                            <span>🎯 6 assist</span>
+                            <span>🏃 13 matcher</span>
+                            <span>💰 €3.00m</span>
+                        </div>
+                    </div>
+                    
+                    <div class="player-card">
+                        <h4>Paulos Abraham</h4>
+                        <p class="player-position">Vänsterytter</p>
+                        <div class="player-stats">
+                            <span>⚽ 3 mål</span>
+                            <span>🎯 4 assist</span>
+                            <span>🏃 11 matcher</span>
+                            <span>💰 €1.80m</span>
+                        </div>
+                    </div>
+
+                    <div class="player-card">
+                        <h4>Victor Eriksson</h4>
+                        <p class="player-position">Mittback</p>
+                        <div class="player-stats">
+                            <span>⚽ 2 mål</span>
+                            <span>🎯 1 assist</span>
+                            <span>🏃 13 matcher</span>
+                            <span>💰 €2.00m</span>
+                        </div>
+                    </div>
+
+                    <div class="player-card">
+                        <h4>Pavle Vagić</h4>
+                        <p class="player-position">Mittback (Kapten)</p>
+                        <div class="player-stats">
+                            <span>⚽ 1 mål</span>
+                            <span>🎯 2 assist</span>
+                            <span>🏃 13 matcher</span>
+                            <span>💰 €2.00m</span>
+                        </div>
+                    </div>
+
+                    <div class="player-card">
+                        <h4>Montader Madjed</h4>
+                        <p class="player-position">Högerytter</p>
+                        <div class="player-stats">
+                            <span>⚽ 2 mål</span>
+                            <span>🎯 3 assist</span>
+                            <span>🏃 10 matcher</span>
+                            <span>💰 €1.80m</span>
+                        </div>
+                    </div>
+
+                    <div class="player-card">
+                        <h4>Warner Hahn</h4>
+                        <p class="player-position">Målvakt</p>
+                        <div class="player-stats">
+                            <span>🥅 8 nollor</span>
+                            <span>🛡️ 9 insläppta</span>
+                            <span>🏃 13 matcher</span>
+                            <span>💰 €500k</span>
+                        </div>
+                    </div>
+
+                    <div class="player-card">
+                        <h4>Tesfaldet Tekie</h4>
+                        <p class="player-position">Centralt mittfält</p>
+                        <div class="player-stats">
+                            <span>⚽ 1 mål</span>
+                            <span>🎯 4 assist</span>
+                            <span>🏃 12 matcher</span>
+                            <span>💰 €1.50m</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section id="statistics" class="section">
+                <h2 class="section-title">Detaljerad Statistik</h2>
+                
+                <div class="stats-detailed">
+                    <div class="stat-group">
+                        <h3>Allsvenskan Tabell (Topp 5)</h3>
+                        <div class="league-table">
+                            <div class="table-row">
+                                <span class="position">1</span>
+                                <span class="team-name">Mjällby AIF</span>
+                                <span class="points">30p</span>
+                                <span class="matches">13m</span>
+                            </div>
+                            <div class="table-row highlight">
+                                <span class="position">2</span>
+                                <span class="team-name">Hammarby IF</span>
+                                <span class="points">27p</span>
+                                <span class="matches">13m</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="position">3</span>
+                                <span class="team-name">AIK</span>
+                                <span class="points">26p</span>
+                                <span class="matches">13m</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="position">4</span>
+                                <span class="team-name">Elfsborg</span>
+                                <span class="points">25p</span>
+                                <span class="matches">12m</span>
+                            </div>
+                            <div class="table-row">
+                                <span class="position">5</span>
+                                <span class="team-name">Malmö FF</span>
+                                <span class="points">22p</span>
+                                <span class="matches">13m</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-group">
+                        <h3>Säsongsstatistik</h3>
+                        <div class="season-stats">
+                            <div class="stat-row">
+                                <span>Spelade matcher:</span>
+                                <span>13</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Vinster:</span>
+                                <span>8</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Oavgjorda:</span>
+                                <span>3</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Förluster:</span>
+                                <span>2</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Målskillnad:</span>
+                                <span>+14</span>
+                        </div>
+                            <div class="stat-row">
+                                <span>Poäng per match:</span>
+                                <span>2.08</span>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Hammarby IF Statistik | Riktiga 2025 säsongsdata</p>
+            <p>🟢⚪ Bajen Forever! 🟢⚪</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+            const refreshBtn = document.getElementById('refreshBtn');
+            const lastUpdated = document.getElementById('lastUpdated');
+
+            // Navigation click handlers
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const sectionId = this.getAttribute('data-section');
+                    
+                    // Only prevent default and do SPA-style navigation if it's an internal link
+                    if (sectionId) {
+                        e.preventDefault();
+                        
+                        // Remove active class from all links that are for internal navigation
+                        navLinks.forEach(l => {
+                            if (l.hasAttribute('data-section')) {
+                                l.classList.remove('active');
+                            }
+                        });
+                        sections.forEach(s => s.classList.remove('active'));
+                        
+                        // Add active class to clicked link and corresponding section
+                        this.classList.add('active');
+                        document.getElementById(sectionId).classList.add('active');
+                    }
+                    // For external links (like Startelva), let the default action (opening the link) proceed.
+                });
+            });
+
+            // Refresh button functionality
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', function() {
+                    const now = new Date();
+                    const timeString = now.toLocaleString('sv-SE');
+                    if(lastUpdated) lastUpdated.textContent = `Uppdaterad: ${timeString}`;
+                    
+                    // Add a brief animation to show refresh
+                    this.style.transform = 'rotate(360deg)';
+                        setTimeout(() => {
+                        this.style.transform = 'rotate(0deg)';
+                    }, 500);
+                });
+            }
+
+            // Auto-update timestamp every minute
+            if (lastUpdated) {
+                setInterval(() => {
+                    const now = new Date();
+                    const timeString = now.toLocaleString('sv-SE');
+                    lastUpdated.textContent = `Uppdaterad: ${timeString}`;
+                }, 60000);
+            }
+
+            // Make matches clickable - link to specific match pages on Hammarby Fotboll website
+            function makeMatchesClickable() {
+                // Function to create specific Hammarby Fotboll match URL
+                function createMatchURL(homeTeam, awayTeam, matchDate) {
+                    // Since exact match URLs are complex and may not exist for all matches,
+                    // let's use a more targeted approach - go to the matches section with filters
+                    const baseUrl = 'https://www.hammarbyfotboll.se';
+                    
+                    // Parse the date to create a more specific search
+                    const parseDate = (dateStr) => {
+                        // Try to extract month and potentially year from date string
+                        const months = {
+                            'jan': '01', 'feb': '02', 'mar': '03', 'apr': '04',
+                            'maj': '05', 'jun': '06', 'jul': '07', 'aug': '08',
+                            'sep': '09', 'okt': '10', 'nov': '11', 'dec': '12'
+                        };
+                        
+                        // Look for month abbreviations in the date string
+                        for (const [monthName, monthNum] of Object.entries(months)) {
+                            if (dateStr.toLowerCase().includes(monthName)) {
+                                return { month: monthNum, found: true };
+                            }
+                        }
+                        return { month: null, found: false };
+                    };
+                    
+                    const dateInfo = parseDate(matchDate);
+                    
+                    // Go to the main matcher page which definitely exists
+                    // This is the most reliable approach to avoid "hoppsan" errors
+                    return `${baseUrl}/matcher`;
+                }
+                
+                // Add click handlers to past matches
+                const matchCards = document.querySelectorAll('.match-card');
+                matchCards.forEach(card => {
+                    card.addEventListener('click', function() {
+                        const dateElement = this.querySelector('.match-date');
+                        const teamElements = this.querySelectorAll('.team-name');
+                        
+                        if (dateElement && teamElements.length === 2) {
+                            const matchDate = dateElement.textContent.trim();
+                            const homeTeam = teamElements[0].textContent.trim();
+                            const awayTeam = teamElements[1].textContent.trim();
+                            
+                            const url = createMatchURL(homeTeam, awayTeam, matchDate);
+                            window.open(url, '_blank');
+                        }
+                    });
+                    
+                    // Add visual feedback
+                    card.title = 'Klicka för att se matchen på hammarbyfotboll.se';
+                });
+                
+                // Add click handlers to upcoming matches
+                const upcomingMatches = document.querySelectorAll('.upcoming-match');
+                upcomingMatches.forEach(match => {
+                    match.addEventListener('click', function() {
+                        const dateElement = this.querySelector('.match-date');
+                        const teamElements = this.querySelectorAll('.team-name');
+                        
+                        if (dateElement && teamElements.length === 2) {
+                            const matchDate = dateElement.textContent.trim();
+                            const homeTeam = teamElements[0].textContent.trim();
+                            const awayTeam = teamElements[1].textContent.trim();
+                            
+                            const url = createMatchURL(homeTeam, awayTeam, matchDate);
+                            window.open(url, '_blank');
+                        }
+                    });
+                    
+                    // Add visual feedback
+                    match.title = 'Klicka för att se matchen på hammarbyfotboll.se';
+                });
+            }
+
+            // Make players clickable - link to player profiles on Hammarby Fotboll website
+            function makePlayersClickable() {
+                // Function to create player profile URL
+                function createPlayerURL(playerName) {
+                    const baseUrl = 'https://www.hammarbyfotboll.se';
+                    
+                    // Handle special cases for specific players with known URL formats
+                    const specialCases = {
+                        'paulos abraham': 'paulos-abraham-',
+                        'victor eriksson': 'victor-eriksson-',
+                        'pavle vagić': 'pavle-vagic',
+                        'montader madjed': 'montader-madjed',
+                        'warner hahn': 'warner-hahn',
+                        'tesfaldet tekie': 'tesfaldet-tekie',
+                        // Add more special cases as needed
+                    };
+                    
+                    const playerKey = playerName.toLowerCase();
+                    if (specialCases[playerKey]) {
+                        return `${baseUrl}/spelare/herr/${specialCases[playerKey]}`;
+                    }
+                    
+                    // Normalize player name for URL (based on real URL structure)
+                    const normalizePlayerName = (name) => name.toLowerCase()
+                        .replace('ä', 'a')
+                        .replace('ö', 'o')
+                        .replace('å', 'a')
+                        .replace('é', 'e')
+                        .replace('ć', 'c')
+                        .replace(' ', '-')
+                        .trim();
+                    
+                    const playerSlug = normalizePlayerName(playerName);
+                    
+                    // Create specific player profile URL using the correct structure
+                    return `${baseUrl}/spelare/herr/${playerSlug}`;
+                }
+                
+                // Add click handlers to player cards
+                const playerCards = document.querySelectorAll('.player-card');
+                playerCards.forEach(card => {
+                    card.addEventListener('click', function() {
+                        const playerNameElement = this.querySelector('h4');
+                        
+                        if (playerNameElement) {
+                            const playerName = playerNameElement.textContent.trim();
+                            const url = createPlayerURL(playerName);
+                            window.open(url, '_blank');
+                        }
+                    });
+                    
+                    // Add visual feedback
+                    card.title = 'Klicka för att se spelarprofil på hammarbyfotboll.se';
+                    card.style.cursor = 'pointer';
+                });
+            }
+
+            // Initialize match clicking functionality
+            makeMatchesClickable();
+            
+            // Initialize player clicking functionality
+            makePlayersClickable();
+        });
+    </script>
+</body>
+</html> 
